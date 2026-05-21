@@ -11,7 +11,7 @@ const PROJECT_ROOT = path.resolve(__dirname, "..", "..");
 const APP_ICON_PATH = path.join(PROJECT_ROOT, "build", "icon.png");
 const TRAY_ICON_PATH = path.join(PROJECT_ROOT, "build", "tray-icon.png");
 const TRAY_ICON_SIZE = 18;
-const FEEDBACK_URL = "https://github.com/lichuling/hengheng-desktop-pet/issues";
+const FEEDBACK_URL = "https://github.com/imChuling/hengheng-desktop-pet/issues";
 const MAX_CODEX_SPRITESHEET_BYTES = 32 * 1024 * 1024;
 const VALID_SIZE_MODES = new Set(["large", "default", "small"]);
 

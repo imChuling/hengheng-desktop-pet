@@ -6,8 +6,4 @@ release
 Thumbs.db
 desktop.ini
 
-.claude
-.swift-module-cache
-
 assets/stickers
-assets/bin
