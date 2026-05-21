@@ -1,0 +1,28 @@
+{
+  "ok": true,
+  "chroma_key": {
+    "hex": "#00FFFF",
+    "rgb": [
+      0,
+      255,
+      255
+    ],
+    "threshold": 96.0
+  },
+  "rows": [
+    {
+      "state": "running-left",
+      "frames": [
+        "/Users/lichuling/Desktop/26Spring/AIM_20/CW/src/pet-runs/butterfly-belle/frames/running-left/00.png",
+        "/Users/lichuling/Desktop/26Spring/AIM_20/CW/src/pet-runs/butterfly-belle/frames/running-left/01.png",
+        "/Users/lichuling/Desktop/26Spring/AIM_20/CW/src/pet-runs/butterfly-belle/frames/running-left/02.png",
+        "/Users/lichuling/Desktop/26Spring/AIM_20/CW/src/pet-runs/butterfly-belle/frames/running-left/03.png",
+        "/Users/lichuling/Desktop/26Spring/AIM_20/CW/src/pet-runs/butterfly-belle/frames/running-left/04.png",
+        "/Users/lichuling/Desktop/26Spring/AIM_20/CW/src/pet-runs/butterfly-belle/frames/running-left/05.png",
+        "/Users/lichuling/Desktop/26Spring/AIM_20/CW/src/pet-runs/butterfly-belle/frames/running-left/06.png",
+        "/Users/lichuling/Desktop/26Spring/AIM_20/CW/src/pet-runs/butterfly-belle/frames/running-left/07.png"
+      ],
+      "method": "components"
+    }
+  ]
+}

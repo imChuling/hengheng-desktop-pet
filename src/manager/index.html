@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' file: data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pet Manager</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="manager-shell">
+      <header class="topbar">
+        <div>
+          <h1 data-i18n="appTitle">Pet Manager</h1>
+          <p class="subtle" data-i18n="appSubtitle">Preview animations, check resources, and manage imported pets.</p>
+          <p id="app-meta" class="app-meta"></p>
+        </div>
+        <div class="topbar-actions">
+          <button id="settings-pet" class="secondary-button" type="button">Settings</button>
+          <button id="help-pet" class="secondary-button" type="button">Help</button>
+          <button id="feedback-pet" class="secondary-button" type="button" data-i18n="feedback">Feedback</button>
+          <button id="import-pet" type="button">Import Pet</button>
+          <button id="refresh-pets" class="secondary-button" type="button">Refresh</button>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <aside class="pet-list-panel">
+          <div class="panel-heading">
+            <h2 data-i18n="pets">Pets</h2>
+            <span id="pet-count" class="count-pill">0</span>
+          </div>
+          <div id="pet-list" class="pet-list"></div>
+          <div id="pet-empty" class="empty-state" hidden>
+            <strong data-i18n="noUsablePets">No usable pets found</strong>
+            <span data-i18n="noUsablePetsDetail">Import a Codex pet spritesheet or restore the built-in character files.</span>
+            <div class="empty-actions">
+              <button id="empty-import-pet" class="secondary-button" type="button" data-i18n="importPet">Import Pet</button>
+              <button id="empty-refresh-pets" class="secondary-button" type="button" data-i18n="refresh">Refresh</button>
+            </div>
+          </div>
+        </aside>
+
+        <section id="library-view" class="library-view">
+          <section class="preview-panel">
+            <div class="preview-stage">
+              <img id="preview-frame" alt="" />
+              <div id="preview-empty" class="preview-empty" hidden>
+                <strong data-i18n="noPreview">No pet preview</strong>
+                <span data-i18n="noPreviewDetail">Choose a built-in pet or import a Codex pet.</span>
+              </div>
+            </div>
+            <div class="state-tabs" id="state-tabs"></div>
+          </section>
+
+          <aside class="details-panel">
+            <div class="selected-header">
+              <img id="selected-icon" alt="" />
+              <div>
+                <h2 id="selected-name">No pet selected</h2>
+                <p id="selected-meta" class="subtle"></p>
+              </div>
+            </div>
+
+            <div class="action-grid">
+              <button id="use-pet" type="button" data-i18n="usePet">Use Pet</button>
+              <button id="rename-pet" class="secondary-button" type="button">Rename</button>
+              <button id="delete-pet" class="danger-button" type="button" data-i18n="delete">Delete</button>
+            </div>
+
+            <section id="first-use-guide" class="first-use-guide" hidden>
+              <strong data-i18n="noImportedPets">No imported pets yet</strong>
+              <span data-i18n="firstUseHint">Pick a built-in pet to start, or import a Codex pet.</span>
+              <button id="first-use-import" class="secondary-button" type="button" data-i18n="importCodexPet">Import Codex Pet</button>
+            </section>
+
+            <section id="onboarding-card" class="onboarding-card">
+              <strong id="onboarding-title">Start here</strong>
+              <span id="onboarding-detail">Choose a pet, make it active, then tune how it behaves on your desktop.</span>
+              <ol>
+                <li data-onboarding-step="choose">Choose a pet from the list.</li>
+                <li data-onboarding-step="use">Click Use Pet to show it on your desktop.</li>
+                <li data-onboarding-step="settings">Open Settings for size, motion, and startup.</li>
+              </ol>
+              <div class="onboarding-actions">
+                <button id="onboarding-import" class="secondary-button" type="button">Import Pet</button>
+                <button id="onboarding-settings" class="secondary-button" type="button">Settings</button>
+              </div>
+            </section>
+
+          <label class="rename-row" id="rename-row">
+            <span data-i18n="name">Name</span>
+            <div class="rename-controls">
+              <input id="rename-input" />
+              <button id="save-rename" type="button" data-i18n="save">Save</button>
+            </div>
+          </label>
+
+            <section>
+              <h3 data-i18n="status">Status</h3>
+              <div id="status-summary" class="status-summary"></div>
+            </section>
+
+            <section id="resource-recovery" class="recovery-card" hidden>
+              <h3 id="resource-recovery-title" data-i18n="resourceRecoveryTitle">Pet needs attention</h3>
+              <p id="resource-recovery-detail" data-i18n="resourceRecoveryDetail">Refresh the library or import a replacement spritesheet.</p>
+              <div class="recovery-actions">
+                <button id="resource-recovery-refresh" class="secondary-button" type="button" data-i18n="refresh">Refresh</button>
+                <button id="resource-recovery-import" class="secondary-button" type="button" data-i18n="importPet">Import Pet</button>
+              </div>
+            </section>
+
+            <details class="diagnostics-panel">
+              <summary data-i18n="resourceCheck">Resource Check</summary>
+              <div id="state-list" class="state-list"></div>
+            </details>
+          </aside>
+        </section>
+
+        <section id="import-view" class="import-view" hidden>
+          <section class="import-panel">
+            <div>
+              <h2 data-i18n="importPet">Import Pet</h2>
+              <p class="subtle" data-i18n="importSubtitle">This importer only accepts a Codex-style pet spritesheet.</p>
+            </div>
+
+            <ol id="import-steps" class="import-steps" aria-label="Import steps">
+              <li data-step="file" data-i18n="stepChooseFile">Choose file</li>
+              <li data-step="check" data-i18n="stepCheckPassed">Check passed</li>
+              <li data-step="import" data-i18n="stepImport">Import</li>
+            </ol>
+
+            <section class="import-help">
+              <h3 data-i18n="whereFile">Where to find the file</h3>
+              <p data-i18n-html="importHelpLocal">
+                If you made a pet in Codex, look for its <code>spritesheet.webp</code> file in your Codex pets folder.
+                On macOS/Linux, try <code>~/.codex/pets/&lt;pet-name&gt;/spritesheet.webp</code>.
+                On Windows, try <code>%USERPROFILE%\.codex\pets\&lt;pet-name&gt;\spritesheet.webp</code>.
+              </p>
+              <p data-i18n-html="importHelpWeb">
+                You can also download a Codex pet package from community sites like <code>petdex.crafter.run</code>,
+                <code>codexpets.net/gallery</code>, or <code>codex-pets.net</code>. Unzip the package, then choose its
+                <code>spritesheet.webp</code> file.
+              </p>
+            </section>
+
+            <label>
+              <span data-i18n="spritesheet">Spritesheet</span>
+              <div class="file-row">
+                <input id="import-spritesheet-path" readonly placeholder="No .webp selected" data-i18n-placeholder="noWebp" />
+                <button id="choose-import-file" type="button" data-i18n="chooseWebp">Choose .webp</button>
+              </div>
+            </label>
+
+            <section id="import-preview" class="import-preview" hidden></section>
+
+            <section id="import-recovery" class="recovery-card" hidden>
+              <h3 id="import-recovery-title">Import could not continue</h3>
+              <p id="import-recovery-detail">Choose the exported spritesheet.webp file, then try again.</p>
+              <button id="retry-import-file" class="secondary-button" type="button">Choose another file</button>
+            </section>
+
+            <label>
+              <span data-i18n="petName">Pet name</span>
+              <input id="import-pet-name" placeholder="Example: Greeny" data-i18n-placeholder="petNamePlaceholder" />
+            </label>
+
+            <label class="replace-row">
+              <input id="replace-imported-pet" type="checkbox" />
+              <span>
+                <span data-i18n="replacePet">Replace an imported pet with the same name</span>
+                <small data-i18n="replacePetHelp">Use this when updating a pet you imported before. Built-in pets are not replaced.</small>
+              </span>
+            </label>
+
+            <div class="import-actions">
+              <button id="cancel-import" class="secondary-button" type="button" data-i18n="back">Back</button>
+              <button id="continue-import" class="secondary-button" type="button" hidden data-i18n="continueImport">Continue Import</button>
+              <button id="save-imported-pet" type="button" disabled data-i18n="importPet">Import Pet</button>
+            </div>
+          </section>
+        </section>
+
+        <section id="settings-view" class="settings-view" hidden>
+          <section class="settings-panel">
+            <div>
+              <h2 data-i18n="settings">Settings</h2>
+              <p class="subtle" data-i18n="settingsSubtitle">Adjust the pet window and startup behavior.</p>
+            </div>
+
+            <section class="settings-group">
+              <h3 data-i18n="general">General</h3>
+              <label>
+                <span data-i18n="language">Language</span>
+                <select id="settings-language">
+                  <option value="en" data-i18n-option="englishOption">English</option>
+                  <option value="zh-CN" data-i18n-option="chineseOption">中文</option>
+                </select>
+              </label>
+            </section>
+
+            <section class="settings-group">
+              <h3 data-i18n="display">Display</h3>
+              <label>
+                <span data-i18n="size">Size</span>
+                <select id="settings-size">
+                  <option value="small" data-i18n-option="small">Small</option>
+                  <option value="default" data-i18n-option="defaultSize">Default</option>
+                  <option value="large" data-i18n-option="large">Large</option>
+                </select>
+              </label>
+
+              <label>
+                <span data-i18n="theme">Theme</span>
+                <select id="settings-theme">
+                  <option value="system" data-i18n-option="themeSystem">System</option>
+                  <option value="light" data-i18n-option="themeLight">Light</option>
+                  <option value="dark" data-i18n-option="themeDark">Dark</option>
+                </select>
+              </label>
+
+              <label class="setting-toggle">
+                <input id="settings-always-on-top" type="checkbox" />
+                <span data-i18n="alwaysOnTop">Always on top</span>
+              </label>
+            </section>
+
+            <section class="settings-group">
+              <h3 data-i18n="motion">Motion</h3>
+              <label class="setting-toggle">
+                <input id="settings-pause-pet" type="checkbox" />
+                <span data-i18n="pausePet">Pause Pet</span>
+              </label>
+              <p id="settings-pause-pet-help" class="setting-help" data-i18n="pausePetHelp">Keep the pet still when you need focus.</p>
+              <label class="setting-toggle">
+                <input id="settings-auto-motion" type="checkbox" />
+                <span data-i18n="autoMotion">Auto Motion</span>
+              </label>
+            </section>
+
+            <section class="settings-group">
+              <h3 data-i18n="startup">Startup</h3>
+              <label class="setting-toggle">
+                <input id="settings-launch-at-login" type="checkbox" />
+                <span data-i18n="launchAtLogin">Launch at Login</span>
+              </label>
+              <p id="settings-launch-at-login-help" class="setting-help" data-i18n="launchAtLoginHelp">Show pet automatically after startup.</p>
+            </section>
+
+            <section class="settings-group">
+              <h3 data-i18n="position">Position</h3>
+              <button id="settings-reset-position" class="secondary-button" type="button" data-i18n="resetPosition">Reset Position</button>
+              <p class="setting-help" data-i18n="windowRecovery">If the pet is off-screen, use Reset Position to bring it back.</p>
+            </section>
+
+            <div class="import-actions">
+              <button id="close-settings" class="secondary-button" type="button" data-i18n="back">Back</button>
+            </div>
+          </section>
+        </section>
+
+        <section id="help-view" class="help-view" hidden>
+          <section class="help-panel">
+            <div>
+              <h2 data-i18n="about">About Pet Manager</h2>
+              <p class="subtle" data-i18n="aboutSubtitle">Manage local desktop pets, preview their states, and import Codex-compatible spritesheets.</p>
+            </div>
+
+            <section class="help-card">
+              <h3 data-i18n="codexFormat">Codex pet format</h3>
+              <p data-i18n-html="codexFormatDetail">
+                Imports use one <code>spritesheet.webp</code> with 9 rows in this order:
+                <code>idle</code>, <code>running-right</code>, <code>running-left</code>, <code>waving</code>,
+                <code>jumping</code>, <code>failed</code>, <code>waiting</code>, <code>running</code>, and
+                <code>review</code>. Each cell is <code>192x208</code>.
+              </p>
+            </section>
+
+            <section class="help-card">
+              <h3 data-i18n="behaviorControls">Behavior controls</h3>
+              <p data-i18n-html="behaviorControlsDetail">
+                Behavior selects the animation state. Auto Motion only moves the pet around its home position while
+                Behavior is set to Default.
+              </p>
+            </section>
+
+            <section class="help-card">
+              <h3 id="about-release-title" data-i18n="releaseInfo">Release info</h3>
+              <p id="about-release-detail">
+                Version information appears here after the app loads. This desktop pet stores settings and imported
+                pets locally on this computer.
+              </p>
+            </section>
+
+            <div class="import-actions">
+              <button id="close-help" class="secondary-button" type="button" data-i18n="back">Back</button>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <p id="message" class="message"></p>
+    </main>
+    <script src="../shared/app-error.js"></script>
+    <script src="../shared/codex-spritesheet.js"></script>
+    <script src="./i18n.js"></script>
+    <script src="./manager-state.js"></script>
+    <script src="./locale-view.js"></script>
+    <script src="./preview-view.js"></script>
+    <script src="./import-view.js"></script>
+    <script src="./settings-view.js"></script>
+    <script src="./pet-list-view.js"></script>
+    <script src="./product-view.js"></script>
+    <script src="./manager.js"></script>
+  </body>
+</html>

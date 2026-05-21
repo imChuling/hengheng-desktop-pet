@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' file: data:; font-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'; media-src 'none'; worker-src 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lcl2 Desktop Pet</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="pet-shell">
+      <section class="pet-stage">
+        <img id="pet-frame" class="pet-frame" alt="lcl2 desktop pet" />
+      </section>
+    </main>
+    <script src="./pet-config.js"></script>
+    <script src="./pet-state-machine.js"></script>
+    <script src="./pet-drag-controller.js"></script>
+    <script src="./renderer.js"></script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "name": "hengheng-desktop-pet",
+  "version": "0.2.0",
+  "description": "Cross-platform desktop pet for macOS and Windows.",
+  "author": "lichuling",
+  "main": "src/main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "test": "node --test tests/*.test.js",
+    "test:e2e": "node --test tests/e2e/*.test.js",
+    "check:assets": "node scripts/check_pack_assets.js",
+    "subset-font": "node scripts/subset_manager_font.js",
+    "import-character": "python3 scripts/import_character.py",
+    "write-character-manifests": "python3 scripts/write_character_manifests.py",
+    "prepack": "npm run check:assets",
+    "pack": "electron-builder --dir",
+    "predist": "npm run check:assets",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "com.hengheng.desktoppet",
+    "productName": "哼哼",
+    "files": [
+      "src/**/*",
+      "assets/fonts/**/*",
+      "assets/characters/**/*",
+      "!assets/**/.DS_Store",
+      "!assets/**/Thumbs.db",
+      "!assets/**/desktop.ini",
+      "!assets/characters/**/frames-manifest.json",
+      "build/icon.png",
+      "build/tray-icon.png",
+      "build/tray-icon@2x.png",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "extraMetadata": {
+      "main": "src/main.js"
+    },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.entertainment",
+      "identity": null,
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "win": {
+      "icon": "build/icon.png",
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    }
+  },
+  "devDependencies": {
+    "electron": "^42.1.0",
+    "electron-builder": "^26.8.1"
+  }
+}

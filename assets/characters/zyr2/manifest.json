@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "id": "zyr2",
+  "name": "zyr2",
+  "source": {
+    "type": "codex-pet-spritesheet"
+  },
+  "frameSize": {
+    "width": 192,
+    "height": 208
+  },
+  "states": {
+    "idle": {
+      "frameCount": 6,
+      "frameDurationMs": 140
+    },
+    "running-right": {
+      "frameCount": 8,
+      "frameDurationMs": 85
+    },
+    "running-left": {
+      "frameCount": 8,
+      "frameDurationMs": 85
+    },
+    "waving": {
+      "frameCount": 4,
+      "frameDurationMs": 140
+    },
+    "jumping": {
+      "frameCount": 5,
+      "frameDurationMs": 110
+    },
+    "failed": {
+      "frameCount": 8,
+      "frameDurationMs": 140
+    },
+    "waiting": {
+      "frameCount": 6,
+      "frameDurationMs": 140
+    },
+    "running": {
+      "frameCount": 6,
+      "frameDurationMs": 85
+    },
+    "review": {
+      "frameCount": 6,
+      "frameDurationMs": 140
+    }
+  }
+}
